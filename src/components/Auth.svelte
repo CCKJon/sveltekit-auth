@@ -3,6 +3,7 @@
     let email="";
     let password="";
     let confirmPassword="";
+    
 </script>
 
 
