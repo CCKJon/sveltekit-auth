@@ -27,7 +27,6 @@
             window.location.href="/privatedashboard";
         }
     }
-
 </script>
 
 
