@@ -1,9 +1,30 @@
 <script>
+	import { authHandlers } from "../stores/authStore";
+
     let register=false;
     let email="";
     let password="";
     let confirmPassword="";
-    
+
+    async function handleSubmit () {
+        if (!email || !password || (register && !confirmPassword)) {
+            return
+        }
+        if (register && password === confirmPassword) {
+            try {
+                await authHandlers.signup(email, password);
+            } catch(err) {
+                console.log(err)
+            }
+        } else {
+            try {
+                await authHandlers.login(email, password);
+            } catch (err) {
+                console.log(err)
+            }
+        }
+    }
+
 </script>
 
 
@@ -11,7 +32,7 @@
     <h1>Sign up</h1>
     <form>
         <label>
-            <input bind:value={email} type="text" placeholder="Email">
+            <input bind:value={email} type="email" placeholder="Email">
         </label>
         <label>
             <input bind:value={password} type="password" placeholder="Password">
@@ -21,12 +42,14 @@
             <input bind:value={confirmPassword} type="password" placeholder="Confirm Password">
         </label>
         {/if}
-        <button>Submit</button>
+        <button on:click={handleSubmit}>Submit</button>
     </form>
     {#if register}
-        <div>Already have an account? <p>Log in</p></div>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => { register = false;}} on:keydown={() => {}} >Already have an account? <p>Log in</p></div>
     {:else}
-        <div>Don't have an account?
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => { register = true;}} on:keydown={() => {}}>Don't have an account?
             <p>Sign Up</p>
         </div>
     {/if}
