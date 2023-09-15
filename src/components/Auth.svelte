@@ -1,5 +1,5 @@
 <script>
-	import { authHandlers } from "../stores/authStore";
+	import { authHandlers, authStore } from "../stores/authStore";
 
     let register=false;
     let email="";
@@ -22,6 +22,9 @@
             } catch (err) {
                 console.log(err)
             }
+        } 
+        if ($authStore.currentUser) {
+            window.location.href="/privatedashboard";
         }
     }
 
