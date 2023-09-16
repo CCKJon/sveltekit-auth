@@ -7,6 +7,7 @@ import {
 	signOut,
 	createUserWithEmailAndPassword,
 	sendPasswordResetEmail
+	// updateCurrentUser
 } from 'firebase/auth';
 
 export const authStore = writable({
@@ -37,6 +38,10 @@ export const authHandlers = {
 				}
 			};
 		});
+
+		// console.log('this is line 55', auth.currentUser, email); test to see if we can trick the system?
+		// auth.currentUser.emailVerified = true; // on the good account, it still shows up as false?
+		console.log('this is my current user on line 44', auth.currentUser);
 		await updateEmail(auth.currentUser, email);
 	},
 	updatePassword: async (password) => {
