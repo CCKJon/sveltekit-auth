@@ -1,5 +1,4 @@
 <script>
-	import { auth } from "../lib/firebase/firebase.client";
 	import { authHandlers, authStore } from "../stores/authStore";
 
     let action = '';
@@ -16,6 +15,7 @@
         }
 
         if (action === 'updateEmail') {
+            console.log("I'm trying to update my email")
             return await authHandlers.updateEmail(newEmail)
         }
     }
