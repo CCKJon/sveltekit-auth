@@ -2,7 +2,7 @@
 import { getApps, getApp, initializeApp, deleteApp } from 'firebase/app';
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
-import { getAuth, setPersistence, inMemoryPersistence } from 'firebase/auth';
+import { getAuth } from 'firebase/auth';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
