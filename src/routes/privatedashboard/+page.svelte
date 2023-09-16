@@ -1,7 +1,7 @@
 <script>
-	import { authHandlers, authStore } from '../../stores/authStore';
-	import { auth } from '$lib/firebase/firebase.client';
-	import AuthReset from '../../components/AuthReset.svelte';
+	import { authHandlers, authStore } from '$src/stores/authStore';
+	// import { auth } from '$lib/firebase/firebase.client';
+	import AuthReset from '$lib/components/AuthReset.svelte';
 
 	let email;
 	authStore.subscribe((curr) => {
