@@ -1,6 +1,7 @@
 <script>
-	import { authStore } from "../../stores/authStore";
+	import { authHandlers, authStore } from "../../stores/authStore";
     import { auth } from "../../lib/firebase/firebase.client";
+    import AuthReset from "../../components/AuthReset.svelte";
 
     let email;
     authStore.subscribe((curr) => {
@@ -9,9 +10,18 @@
     });
 </script>
 
-<div>
-    <h1>Current User: {email}</h1>
-</div>
+
+{#if $authStore.currentUser}
+    <div>
+        <h1>Current User: {email}</h1>
+        <AuthReset />
+        <button on:click={authHandlers.logout}>Logout</button>
+    </div>
+{:else}
+    <div>Loading....</div>
+{/if}
+
+
 
 
 <style>
@@ -21,5 +31,8 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+    }
+    h1 {
+        text-align: center;
     }
 </style>

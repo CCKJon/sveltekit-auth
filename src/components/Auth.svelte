@@ -31,7 +31,7 @@
 
 
 <div class="container">
-    <h1>Sign up</h1>
+    <h1>{register ? 'Register' : 'Log in'}</h1>
     <form>
         <label>
             <input bind:value={email} type="email" placeholder="Email">
@@ -55,6 +55,7 @@
             <p>Sign Up</p>
         </div>
     {/if}
+
 </div>
 
 <style>

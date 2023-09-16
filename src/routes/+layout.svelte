@@ -3,6 +3,7 @@
     import {auth} from '../lib/firebase/firebase.client'
     import { authStore } from '../stores/authStore';
     import Auth from '../components/auth.svelte';
+    import {browser} from '$app/environment';
 
 
     onMount(() => {
@@ -11,7 +12,17 @@
             authStore.update((curr) => {
                 return { ...curr, isLoading: false, currentUser: user};
             });
+
+
+            if (browser && 
+                !$authStore?.currentUser &&
+                !$authStore.isLoading &&
+                window.location.pathname !== '/'
+            ) {
+                window.location.href = '/';
+            }
         });
+        return unsubscribe
     });
 </script>
 
