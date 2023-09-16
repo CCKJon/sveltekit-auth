@@ -1,71 +1,56 @@
 <script>
-	import { authHandlers, authStore } from '../stores/authStore';
+	import { authHandlers } from '../stores/authStore';
 
-	let register = false;
-	let email = '';
-	let password = '';
-	let confirmPassword = '';
+	let action = '';
+	let newEmail = '';
+	let newPass = '';
 
 	async function handleSubmit() {
-		if (!email || !password || (register && !confirmPassword)) {
+		if (!action) {
 			return;
 		}
-		if (register && password === confirmPassword) {
-			try {
-				await authHandlers.signup(email, password);
-			} catch (err) {
-				console.log(err);
-			}
-		} else {
-			try {
-				await authHandlers.login(email, password);
-			} catch (err) {
-				console.log(err);
-			}
+		if (action === 'updatePass') {
+			console.log("i'm trying to update my password", newPass);
+			return await authHandlers.updatePassword(newPass);
 		}
-		if ($authStore.currentUser) {
-			window.location.href = '/privatedashboard';
+
+		if (action === 'updateEmail') {
+			console.log("I'm trying to update my email", newEmail);
+			return await authHandlers.updateEmail(newEmail);
 		}
 	}
 </script>
 
 <div class="container">
-	<h1>{register ? 'Register' : 'Log in'}</h1>
-	<form>
-		<label>
-			<input bind:value={email} type="email" placeholder="Email" />
-		</label>
-		<label>
-			<input bind:value={password} type="password" placeholder="Password" />
-		</label>
-		{#if register}
+	<div>
+		<button
+			on:click={() => {
+				action = 'updateEmail';
+			}}>Update Email</button
+		>
+		<button
+			on:click={() => {
+				action = 'updatePass';
+			}}>Reset Password</button
+		>
+	</div>
+
+	{#if action === 'updatePass'}
+		<form>
 			<label>
-				<input bind:value={confirmPassword} type="password" placeholder="Confirm Password" />
+				<input bind:value={newPass} type="password" placeholder="New Password" />
 			</label>
-		{/if}
-		<button on:click={handleSubmit}>Submit</button>
-	</form>
-	{#if register}
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div
-			on:click={() => {
-				register = false;
-			}}
-			on:keydown={() => {}}
-		>
-			Already have an account? <p>Log in</p>
-		</div>
-	{:else}
-		<!-- svelte-ignore a11y-no-static-element-interactions -->
-		<div
-			on:click={() => {
-				register = true;
-			}}
-			on:keydown={() => {}}
-		>
-			Don't have an account?
-			<p>Sign Up</p>
-		</div>
+			<button on:click={handleSubmit}>Submit</button>
+		</form>
+	{/if}
+
+	{#if action === 'updateEmail'}
+		<form>
+			<label>
+				<input bind:value={newEmail} type="email" placeholder="New Email" />
+			</label>
+			<button on:click={handleSubmit}>Submit</button>
+		</form>
 	{/if}
 </div>
 
@@ -80,5 +65,9 @@
 	.container form {
 		display: flex;
 		flex-direction: column;
+	}
+	.container div {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 </style>
