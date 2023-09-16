@@ -1,5 +1,5 @@
 <script>
-	import Auth from '$lib/components/auth.svelte';
+	import Auth from '../components/Auth.svelte';
 </script>
 
 <div>

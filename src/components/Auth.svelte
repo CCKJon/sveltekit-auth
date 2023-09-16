@@ -1,5 +1,5 @@
 <script>
-	import { authHandlers, authStore } from '$src/stores/authStore';
+	import { authHandlers, authStore } from '../stores/authStore';
 
 	let register = false;
 	let email = '';
