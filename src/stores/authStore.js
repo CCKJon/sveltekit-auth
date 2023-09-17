@@ -6,7 +6,8 @@ import {
 	updatePassword,
 	signOut,
 	createUserWithEmailAndPassword,
-	sendPasswordResetEmail
+	sendPasswordResetEmail,
+	sendEmailVerification
 	// updateCurrentUser
 } from 'firebase/auth';
 
@@ -20,7 +21,8 @@ export const authHandlers = {
 		await signInWithEmailAndPassword(auth, email, password);
 	},
 	signup: async (email, password) => {
-		await createUserWithEmailAndPassword(auth, email, password);
+		const newUserCredential = await createUserWithEmailAndPassword(auth, email, password);
+		await sendEmailVerification(newUserCredential.user);
 	},
 	logout: async () => {
 		await signOut(auth);
@@ -29,20 +31,20 @@ export const authHandlers = {
 		await sendPasswordResetEmail(auth, email);
 	},
 	updateEmail: async (email) => {
-		authStore.update((curr) => {
-			return {
-				...curr,
-				currentUser: {
-					...curr.currentUser,
-					email: email
-				}
-			};
-		});
-
-		// console.log('this is line 55', auth.currentUser, email); test to see if we can trick the system?
+		console.log('before updating email in authstore', auth.currentUser, email);
 		// auth.currentUser.emailVerified = true; // on the good account, it still shows up as false?
-		console.log('this is my current user on line 44', auth.currentUser);
-		await updateEmail(auth.currentUser, email);
+		// console.log('this is my current user', auth.currentUser);
+		await updateEmail(auth.currentUser, email).then(() => {
+			authStore.update((curr) => {
+				return {
+					...curr,
+					currentUser: {
+						...curr.currentUser,
+						email: email
+					}
+				};
+			});
+		});
 	},
 	updatePassword: async (password) => {
 		await updatePassword(auth.currentUser, password);

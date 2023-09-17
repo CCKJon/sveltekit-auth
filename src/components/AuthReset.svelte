@@ -45,11 +45,19 @@
 	{/if}
 
 	{#if action === 'updateEmail'}
-		<form>
+		<!-- <form>
 			<label>
 				<input bind:value={newEmail} type="email" placeholder="New Email" />
 			</label>
 			<button on:click={handleSubmit}>Submit</button>
+		</form> -->
+		<form on:submit={handleSubmit} class="flex flex-col gap-1" action="">
+			<input bind:value={newEmail} autocomplete="on" type="email" id="email" placeholder="Email" />
+
+			<button
+				class="bg-gray-200 hover:bg-gray-200/50 border rounded-md border-gray-600"
+				type="submit">Submit</button
+			>
 		</form>
 	{/if}
 </div>
