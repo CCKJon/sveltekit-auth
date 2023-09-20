@@ -1,11 +1,10 @@
 <script>
-	import { authHandlers, authStore } from '$src/stores/authStore';
-	// import { auth } from '$lib/firebase/firebase.client';
-	import AuthReset from '$lib/components/AuthReset.svelte';
+	import { authHandlers, authStore } from '../../stores/authStore';
+	import AuthReset from '../../components/AuthReset.svelte';
 
 	let email;
 	authStore.subscribe((curr) => {
-		console.log('CURR', curr);
+		// console.log('CURR', curr);
 		email = curr?.currentUser?.email;
 	});
 </script>
