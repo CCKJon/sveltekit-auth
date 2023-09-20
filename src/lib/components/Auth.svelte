@@ -54,6 +54,10 @@
         <div on:click={() => { register = true;}} on:keydown={() => {}}>Don't have an account?
             <p>Sign Up</p>
         </div>
+        <!-- svelte-ignore a11y-no-static-element-interactions -->
+        <div on:click={() => {authHandlers.resetPassword(email)}} on:keydown={() => {}}>
+            <p>Forgot Password?</p>
+        </div>
     {/if}
 
 </div>
